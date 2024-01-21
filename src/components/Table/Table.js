@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyledTable, StyledThead, StyledTr, StyledTh, CategorySpan, StyledTbody, StyledTd } from './Table.styled';
 
-const Table = ({ columnNames, data }) => {
+const Table = ({ columnNames, currentData }) => {
 	return (
 		<StyledTable>
 			<StyledThead>
@@ -14,7 +14,7 @@ const Table = ({ columnNames, data }) => {
 				</StyledTr>
 			</StyledThead>
 			<StyledTbody>
-				{data.map((item) => (
+				{currentData.map((item) => (
 					<StyledTr key={item.id}>
 						{columnNames.map((columnName) => (
 							<StyledTd key={columnName}>{item[columnName]}</StyledTd>
