@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import Table from '../components/Table/Table';
 import Pagination from '../components/Pagination/Pagination';
+import SearchBox from '../components/SearchBox/SearchBox';
 
-const CustomTable = ({ data, rowsPerPage }) => {
+const CustomTable = ({ data, rowsPerPage, search }) => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [sortedData, setSortedData] = useState(data);
 
@@ -15,13 +16,30 @@ const CustomTable = ({ data, rowsPerPage }) => {
 	// slice wycina z wycina z tablicy elmenety do odpowiedniej currentPage
 	const totalPages = Math.ceil(sortedData.length / rowsPerPage);
 	// ilosc elementow z tabeli / zachiacna ilosc na jednej stronie = ilosc stron
-	
-    const handlePageChange = (pageNumber) => {
+
+	const handlePageChange = (pageNumber) => {
 		setCurrentPage(pageNumber);
 	};
-    
+
+	const handleSearch = (inptValue) => {
+		const filteredData = data.filter((item) => {
+			for (const columnName of columnNames) {
+				const cellValue = String(item[columnName]).toLowerCase();
+				// zamienia wszystkie dane z obiektu Data na 'stingi' + lowercase zeby input nie byl wrazliwy na wielkosc znakow
+				if (cellValue.includes(inptValue.toLowerCase())) {
+					return true;
+                    // jesli ciag znakow jest w zbiorze data to zwraca true = czyli zostaje w filteredData
+				}
+			}
+			return false;
+            //jesli takiego ciagu nie ma to zwraca false i nie wrzuca nic pod fildetedrData
+		});
+		setSortedData(filteredData);
+	};
+
 	return (
 		<>
+			{search && <SearchBox handleSearch={handleSearch} />}
 			<Table
 				columnNames={columnNames}
 				currentData={currentData}

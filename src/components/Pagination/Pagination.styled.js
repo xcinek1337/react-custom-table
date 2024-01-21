@@ -6,6 +6,6 @@ export const PaginationContainer = styled.div`
 	align-content: center;
 `;
 export const PaginationSpan = styled.span`
-	padding: 5px;
+	margin: 5px 10px;
 	cursor: pointer;
 `;
