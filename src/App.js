@@ -31,6 +31,7 @@ function App() {
 				data={users}
 				rowsPerPage={5}
 				search={'wlaczone'}
+				sorting={'wlaczone'}
 			/>
 		</div>
 	);

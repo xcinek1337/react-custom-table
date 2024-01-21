@@ -1,14 +1,14 @@
 import React from 'react';
 import { StyledTable, StyledThead, StyledTr, StyledTh, CategorySpan, StyledTbody, StyledTd } from './Table.styled';
 
-const Table = ({ columnNames, currentData }) => {
+const Table = ({ columnNames, currentData, handleSort }) => {
 	return (
 		<StyledTable>
 			<StyledThead>
 				<StyledTr>
 					{columnNames.map((columnName) => (
 						<StyledTh key={columnName}>
-							<CategorySpan>{columnName}</CategorySpan>
+							<CategorySpan onClick={()=> handleSort(columnName)}>{columnName}</CategorySpan>
 						</StyledTh>
 					))}
 				</StyledTr>
