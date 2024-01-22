@@ -43,16 +43,16 @@ describe('CustomTable', () => {
 		expect(userAge).toBeInTheDocument();
 	});
 
-	xtest('Sorting by age', async () => {
-		// nie mam pojecia dlaczego on nie chce wykonac klikniecia
-		//czy kolumna musi byc buttonem? onClick mam na elemencie span
+	test('Sorting by age', async () => {
 		setup();
 
-		const columnAge = await screen.findByText('age');
-		userEvent.click(columnAge);
+		const categoryId = await screen.findByText('age');
+		fireEvent.click(categoryId);
+		fireEvent.click(categoryId);
 
 		await waitFor(() => {
-			const id8 = screen.queryByText('oooo pppp');
+			//{ id: 8, name: 'oooo pppp', age: 80 },
+			const id8 = screen.queryByText('80');
 			expect(id8).toBeInTheDocument();
 		});
 	});
@@ -69,6 +69,7 @@ describe('CustomTable', () => {
 			expect(id8).toBeInTheDocument();
 		});
 	});
+
 	test('search by input - should not find', async () => {
 		setup();
 		const searchingValue = 'oo';
@@ -93,6 +94,7 @@ describe('CustomTable', () => {
 			expect(id8).toBeInTheDocument();
 		});
 	});
+
 	test('pagination works - should not find', async () => {
 		setup();
 
@@ -102,6 +104,52 @@ describe('CustomTable', () => {
 		await waitFor(() => {
 			const id2 = screen.queryByText('Bbb ccc');
 			expect(id2).not.toBeInTheDocument();
+		});
+	});
+
+	test('select last page and sorting by id, should give frists index, ', async () => {
+		expect.assertions(2);
+		setup();
+
+		const lastPage = await screen.findByText('2', { selector: 'span' });
+		fireEvent.click(lastPage);
+
+		await waitFor(() => {
+			//{ id: 8, name: 'oooo pppp', age: 80 },
+			const id8 = screen.queryByText('oooo pppp');
+			expect(id8).toBeInTheDocument();
+		});
+
+		const categoryId = await screen.findByText('id');
+		fireEvent.click(categoryId);
+
+		await waitFor(() => {
+			// 	{ id: 1, name: 'Aaa Bbbb', age: 10 },
+			const id1 = screen.queryByText('Aaa Bbbb');
+			expect(id1).toBeInTheDocument();
+		});
+	});
+
+	test('select second page and search by input, should give input result', async () => {
+		expect.assertions(2);
+		setup();
+
+		const input = await screen.findByRole('textbox');
+		const lastPage = await screen.findByText('2', { selector: 'span' });
+		fireEvent.click(lastPage);
+
+		await waitFor(() => {
+			//{ id: 8, name: 'oooo pppp', age: 80 },
+			const id8 = screen.queryByText('oooo pppp');
+			expect(id8).toBeInTheDocument();
+		});
+
+		userEvent.type(input, 'aa');
+
+		await waitFor(() => {
+			//{ id: 1, name: 'Aaa Bbbb', age: 10 },
+			const id1 = screen.queryByText('Aaa Bbbb');
+			expect(id1).toBeInTheDocument();
 		});
 	});
 });
