@@ -14,8 +14,8 @@ function App() {
 				<CustomTable
 					data={users}
 					rowsPerPage={5}
-					search={'wlaczone'}
-					sorting={'wlaczone'}
+					search={true}
+					sorting={true}
 				/>
 			</StyledPage>
 		</>

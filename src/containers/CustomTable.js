@@ -21,15 +21,16 @@ const CustomTable = ({ data, rowsPerPage, search, sorting }) => {
 
 		const direction = sortColumn === columnKey && sortDirection === 'asc' ? 'desc' : 'asc';
 
-		const sorted = [...data].sort((a, b) => {
+		const sorted = [...sortedData].sort((a, b) => {
 			if (a[columnKey] < b[columnKey]) return direction === 'asc' ? -1 : 1;
 			if (a[columnKey] > b[columnKey]) return direction === 'asc' ? 1 : -1;
-            return 0;
+			return 0;
 		});
-        
+
 		setSortColumn(columnKey);
 		setSortDirection(direction);
 		setSortedData(sorted);
+		setCurrentPage(1);
 	};
 
 	const handlePageChange = (pageNumber) => {
@@ -46,6 +47,7 @@ const CustomTable = ({ data, rowsPerPage, search, sorting }) => {
 			}
 			return false;
 		});
+		setCurrentPage(1);
 		setSortedData(filteredData);
 	};
 

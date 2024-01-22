@@ -35,6 +35,20 @@ export const CategorySpan = styled.span`
 	margin-left: 20px;
 	background-color: white;
 	color: black;
+	
+	&.sorted::after {
+		content: '>';
+		position: absolute;
+		margin-left: 5px; 
+		font-size: 14px;
+		transform: rotate(-90deg);
+		transition: transform 0.3s ease-in-out; 
+	}
+	
+	&.sorted.desc::after {
+		transform: rotate(90deg); 
+	}
 
 	cursor: pointer;
+
 `;
